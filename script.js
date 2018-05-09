@@ -207,7 +207,7 @@ function dataPoints() {
         if (isAllNaN) {poolsArrays[year] = [];}
       });
 
-      console.log(poolsYearlyMax);
+      // console.log(poolsYearlyMax);
 
       doneLoading();
     }
