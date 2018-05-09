@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Heatmaps</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        font-family: 'Roboto','sans-serif';
+      }
+      #floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 50vw;
+        transform: translateX(-50%);
+        z-index: 5;
+        background-color: #fff;
+        padding: 10px 20px 10px;
+        border-radius: 10px;
+        text-align: center;
+        
+        line-height: 30px;
+        background-color: #fff;
+        border: 1px solid #999;
+      }
+
+      #loader {
+        width: 150px;
+        /*height: 100px;*/
+        position: absolute;
+        z-index: 10;
+        left: 50vw;
+        top: 50vh;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 15px 15px 5px;
+        border-radius: 10px;
+        text-align: center;
+
+        font-size: 0.9em;
+      }
+
+      #loader img {
+        width: 100px;
+      }
+
+      #bottom-panel {
+        position: absolute;
+        bottom: 10px;
+        left: 50vw;
+        transform: translateX(-50%);
+        z-index: 5;
+        background-color: #fff;
+        padding: 10px 20px 10px;
+        border-radius: 10px;
+        text-align: center;
+        
+        line-height: 30px;
+        background-color: #fff;
+        border: 1px solid #999;
+      }
+
+      .credits {
+        font-size: 0.9em;
+      }
+
+      input#year {
+        width: calc(100% - 100px);
+      }
+
+      .legend {
+        background: linear-gradient(to right, #00FF00, yellow, red);
+        width: calc(100% - 100px);
+        height: 12px;
+        border-radius: 5px;
+        display: inline-block;
+      }
+
+      .blue-gradient {
+        background: linear-gradient(to right,
+          rgb(0, 255, 255),
+          rgb(0, 255, 255),
+          rgb(0, 191, 255),
+          rgb(0, 127, 255),
+          rgb(0, 63, 255),
+          rgb(0, 0, 255),
+          rgb(0, 0, 223),
+          rgb(0, 0, 191),
+          rgb(0, 0, 159),
+          rgb(0, 0, 127),
+          rgb(63, 0, 91),
+          rgb(127, 0, 63),
+          rgb(191, 0, 31),
+          rgb(255, 0, 0));
+      }
+
+      .max {
+        line-height: 15px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="loader">
+      <img src="ajax-loader.gif">
+      <p>Downloading files and processing data...</p>
+    </div>
+    <div id="floating-panel">
+      <div class="main" style="width: 100%">
+        <input type="range" min="1910" max="2017" id="year" value="2017"> 
+        <span id="year-name">2017</span>
+      </div>
+      <span id="info-message">Loading...</span><br/>
+      <button onclick="toggleHeatmap()">Toggle Map</button>
+      <button onclick="changeRadius()">Toggle overlay</button> - 
+      <button onclick="changeGradient()">Change gradient</button>
+      <button onclick="changeOpacity()">Change opacity</button>
+    </div>
+
+    <div id="bottom-panel">
+      Metric:
+      <select name="metric">
+        <option value="Top Salinity  (psu)">Salinity  (psu)</option>
+        <option value="Top Active Chlorophyll 'A' (µg/L)">Active Chlorophyll 'A' (µg/L)</option>
+        <option value="Top Dissolved Organic Carbon (mg/L)">Dissolved Organic Carbon (mg/L)</option>
+        <option value="Top Turbidity( Nephelometric Turbidity Units)">Turbidity( Nephelometric Turbidity Units)</option>
+        <option value="Top Fluorometer (mg/m3)">Fluorometer (mg/m3)</option>
+        <option value="Percentage O2 Saturation Top Sample">Percentage O2 Saturation</option>
+      </select><br/>
+      <div class="legend"></div> <span class="max">Max: <span id="max-val"></span></span>
+      <br>
+      <span class="credits">Developed by: <a href="http://castrovaron.com">Juan Castro Varón</a> - Data by: <a href="http://www.nyc.gov/html/dep/html/harborwater/harborwater_quality_survey.shtml">New York Harbor Water Quality Survey</a></span>
+    </div>
+
+    <div id="map"></div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="papaparse.min.js"></script>
+    <script src="script.js"></script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1OngXEEew_MjM_wJyAj7Zzn9oC4TvNso&libraries=visualization&callback=initMap">
+    </script>
+  </body>
+</html>
