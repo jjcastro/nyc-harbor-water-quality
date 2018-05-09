@@ -111,7 +111,7 @@ function initMap() {
   map.data.setStyle({
     strokeColor: 'white',
     fillColor: 'black',
-    fillOpacity: 0.5
+    fillOpacity: 0.3
   });
 
   initPools();
